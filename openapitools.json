@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "6.6.0",
+    "generators": {
+      "v2.0": {
+        "generatorName": "typescript-axios",
+        "output": "./services/gen/restClient",
+        "inputSpec": "http://92.255.176.180:5555/swagger/v1/swagger.json",
+        "additionalProperties": {
+          "npmName": "restClient",
+          "npmVersion": "1.0.0",
+          "snapshot": false,
+          "supportsES6": true,
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+}
