@@ -4,11 +4,10 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useAuthContext } from "../../pages/_app";
 import firebase_app from "../../services/firebase";
 import Image from "next/image";
-import { Constants } from "../../constants/constants";
 import Link from "next/link";
 
 export const UserNav: FC = () => {

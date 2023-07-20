@@ -15,6 +15,8 @@ import { MultiSelect } from "react-multi-select-component";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import axios from "axios";
+import Upload from "../../../components/@elements/upload";
+import ImageCropper from "../../../components/@elements/imageCropper";
 
 var slugify = require("slugify");
 
@@ -55,80 +57,91 @@ const PostAdd: FC = () => {
           </Link>
         </div>
         <Card title="Add post">
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Title</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-              value={model.title ?? ""}
-              onChange={(val) =>
-                setModel({
-                  ...model,
-                  title: val.target.value,
-                  slug: slugify(val.target.value),
-                })
-              }
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Title</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input input-bordered w-full max-w-xs"
+                  value={model.title ?? ""}
+                  onChange={(val) =>
+                    setModel({
+                      ...model,
+                      title: val.target.value,
+                      slug: slugify(val.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Slug</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input input-bordered w-full max-w-xs"
+                  value={model.slug ?? ""}
+                  onChange={(val) =>
+                    setModel({ ...model, slug: val.target.value })
+                  }
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Categories</span>
+                </label>
+                {data && (
+                  <MultiSelect
+                    options={data.map((q) => {
+                      return { label: q.title!, value: q.categoryId! };
+                    })}
+                    value={(model.categories ?? []).map((q) => {
+                      return { label: q.title!, value: q.categoryId! };
+                    })}
+                    onChange={(val: any[]) => {
+                      console.log(val);
+                      const ids = val.map((q) => q.value);
+                      console.log(ids);
+                      setModel({
+                        ...model,
+                        categories: data.filter((q) =>
+                          ids.includes(q.categoryId)
+                        ),
+                      });
+                    }}
+                    labelledBy="Select"
+                  />
+                  // <Select
+                  //   label="Category"
+                  //   items={(data ?? []).map((q) => {
+                  //     return { id: q.categoryId, name: q.title };
+                  //   })}
+                  //   onChange={(val) => console.log("on change", val)}
+                  // />
+                )}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Description</span>
+                </label>
+                <textarea
+                  className="textarea textarea-bordered h-24"
+                  value={model.desctiption ?? ""}
+                  onChange={(val) =>
+                    setModel({ ...model, desctiption: val.target.value })
+                  }
+                ></textarea>
+              </div>
+            </div>
+
+            <ImageCropper saveImg={(img) => setModel({ ...model, image:img })} />
           </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Slug</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-              value={model.slug ?? ""}
-              onChange={(val) => setModel({ ...model, slug: val.target.value })}
-            />
-          </div>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Description</span>
-            </label>
-            <textarea
-              className="textarea textarea-bordered h-24"
-              value={model.desctiption ?? ""}
-              onChange={(val) =>
-                setModel({ ...model, desctiption: val.target.value })
-              }
-            ></textarea>
-          </div>
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">Categories</span>
-            </label>
-            {data && (
-              <MultiSelect
-                options={data.map((q) => {
-                  return { label: q.title!, value: q.categoryId! };
-                })}
-                value={(model.categories ?? []).map((q) => {
-                  return { label: q.title!, value: q.categoryId! };
-                })}
-                onChange={(val: any[]) => {
-                  console.log(val);
-                  const ids = val.map((q) => q.value);
-                  console.log(ids);
-                  setModel({
-                    ...model,
-                    categories: data.filter((q) => ids.includes(q.categoryId)),
-                  });
-                }}
-                labelledBy="Select"
-              />
-              // <Select
-              //   label="Category"
-              //   items={(data ?? []).map((q) => {
-              //     return { id: q.categoryId, name: q.title };
-              //   })}
-              //   onChange={(val) => console.log("on change", val)}
-              // />
-            )}
-          </div>
+
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Content</span>
@@ -142,7 +155,7 @@ const PostAdd: FC = () => {
             Save
           </button>
         </Card>
-        {JSON.stringify(model)}
+        {/* {JSON.stringify(model)} */}
       </div>
     </PublicLayout>
   );

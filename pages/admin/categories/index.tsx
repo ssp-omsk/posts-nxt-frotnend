@@ -59,12 +59,12 @@ const CategoriesPage: FC = () => {
               </thead>
               <tbody>
                 {data
-                  ?.filter((q) => q.parentCategory == null)
+                  ?.filter((q) => q.parentCategoryId == null)
                   .map((k, i) => (
                     <>
                       <tr key={i}>
                         <td>{k.title}</td>
-                        <td>{k.slug}</td>
+                        <td>{k.slug} </td>
                         <td className="flex cent">
                           <TrashIcon
                             className="h-6 w-6 text-red-500 cursor-pointer"

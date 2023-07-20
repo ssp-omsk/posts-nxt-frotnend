@@ -107,7 +107,7 @@ export function Wysiwyg({ value, onChange, ...props }) {
           ["link", "image"],
           ["clean"], // remove formatting button
         ],
-        handlers: { image: imgHandler }, // Custom image handler
+        // handlers: { image: imgHandler }, // Custom image handler
       },
     }),
     []

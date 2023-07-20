@@ -40,6 +40,7 @@ export const AuthContextProvider: FC<any> = ({ children }) => {
     if (!user) {
       console.log("setInterceptor call", user, null);
       axios.interceptors.request.clear();
+      setLoading(false);
       return;
     }
     const token = await user.getIdToken();

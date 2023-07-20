@@ -1,4 +1,5 @@
 import { Card } from "../components/@elements/card";
+import ImageCropper from "../components/@elements/imageCropper";
 import { PublicLayout } from "../components/layout/publicLayout";
 
 export default function Home() {
