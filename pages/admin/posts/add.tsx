@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { PublicLayout } from "../../../components/layout/publicLayout";
 import { Card } from "../../../components/@elements/card";
-import { Select } from "../../../components/@elements/select";
 import { Wysiwyg } from "../../../components/wysiwyg";
 import {
   CategoriesApi,
@@ -14,8 +13,6 @@ import { useRouter } from "next/router";
 import { MultiSelect } from "react-multi-select-component";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import axios from "axios";
-import Upload from "../../../components/@elements/upload";
 import ImageCropper from "../../../components/@elements/imageCropper";
 
 var slugify = require("slugify");

@@ -21,9 +21,9 @@ const PostsPage: FC = () => {
   const [data, setData] = useState<Post[]>();
 
   const fetchData = async () => {
-    const resp = await api.apiPostsGet();
+    const resp = await api.apiPostsGet(10, 0);
     if (resp.status !== 200) return;
-    setData(resp.data);
+    setData(resp.data.data ?? []);
   };
 
   const deleteItem = async (id: number) => {

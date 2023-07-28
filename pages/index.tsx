@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Card } from "../components/@elements/card";
-import ImageCropper from "../components/@elements/imageCropper";
 import { PublicLayout } from "../components/layout/publicLayout";
+import { AuthContext } from "./_app";
 
 export default function Home() {
+  const context = useContext(AuthContext)
+
   return (
     <PublicLayout title="Main">
       <div className="grid grid-cols-4 xl:grid-cols-5 gap-3 w-full">
@@ -31,6 +34,9 @@ export default function Home() {
                 atque? Blanditiis cumque vel explicabo suscipit recusandae,
                 doloribus dolore nulla obcaecati amet veniam!
               </p>
+              <pre>
+                {JSON.stringify(context, null ,2)}
+              </pre>
               <div className="card-actions justify-end">
                 <button className="btn btn-primary">Buy Now</button>
               </div>
