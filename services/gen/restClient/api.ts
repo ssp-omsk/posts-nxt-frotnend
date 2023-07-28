@@ -69,6 +69,37 @@ export interface Category {
 /**
  * 
  * @export
+ * @interface CategoryDto
+ */
+export interface CategoryDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryDto
+     */
+    'categoryId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryDto
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryDto
+     */
+    'slug'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryDto
+     */
+    'parentCategoryId'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface Post
  */
 export interface Post {
@@ -123,6 +154,83 @@ export interface Post {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface PostDto
+ */
+export interface PostDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PostDto
+     */
+    'postId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'image'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'slug'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'desctiption'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostDto
+     */
+    'body'?: string | null;
+    /**
+     * 
+     * @type {PostState}
+     * @memberof PostDto
+     */
+    'state'?: PostState;
+    /**
+     * 
+     * @type {Array<CategoryDto>}
+     * @memberof PostDto
+     */
+    'categories'?: Array<CategoryDto> | null;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface PostDtoPagingResponse
+ */
+export interface PostDtoPagingResponse {
+    length: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostDtoPagingResponse
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {Array<PostDto>}
+     * @memberof PostDtoPagingResponse
+     */
+    'data'?: Array<PostDto> | null;
+}
 /**
  * 
  * @export
@@ -779,10 +887,12 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @param {number} [take] 
+         * @param {number} [skip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPostsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiPostsGet: async (take?: number, skip?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -798,6 +908,14 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication Bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (take !== undefined) {
+                localVarQueryParameter['Take'] = take;
+            }
+
+            if (skip !== undefined) {
+                localVarQueryParameter['Skip'] = skip;
+            }
 
 
     
@@ -974,11 +1092,13 @@ export const PostsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {number} [take] 
+         * @param {number} [skip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPostsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsGet(options);
+        async apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostDtoPagingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsGet(take, skip, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1034,11 +1154,13 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @param {number} [take] 
+         * @param {number} [skip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPostsGet(options?: any): AxiosPromise<Array<Post>> {
-            return localVarFp.apiPostsGet(options).then((request) => request(axios, basePath));
+        apiPostsGet(take?: number, skip?: number, options?: any): AxiosPromise<PostDtoPagingResponse> {
+            return localVarFp.apiPostsGet(take, skip, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1088,11 +1210,13 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
 export interface PostsApiInterface {
     /**
      * 
+     * @param {number} [take] 
+     * @param {number} [skip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostsApiInterface
      */
-    apiPostsGet(options?: AxiosRequestConfig): AxiosPromise<Array<Post>>;
+    apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): AxiosPromise<PostDtoPagingResponse>;
 
     /**
      * 
@@ -1142,12 +1266,14 @@ export interface PostsApiInterface {
 export class PostsApi extends BaseAPI implements PostsApiInterface {
     /**
      * 
+     * @param {number} [take] 
+     * @param {number} [skip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostsApi
      */
-    public apiPostsGet(options?: AxiosRequestConfig) {
-        return PostsApiFp(this.configuration).apiPostsGet(options).then((request) => request(this.axios, this.basePath));
+    public apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).apiPostsGet(take, skip, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

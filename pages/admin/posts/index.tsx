@@ -11,19 +11,30 @@ import {
   PencilSquareIcon,
   PlusIcon,
   ArrowLeftIcon,
+  EyeIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { PaginationContainer } from "../../../components/@elements/pagination/PaginationContainer";
 
 const api = new PostsApi(apiConfig);
 
 const PostsPage: FC = () => {
   const router = useRouter();
   const [data, setData] = useState<Post[]>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageLimit, setPageLimit] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const lastPostIndex = currentPage * pageLimit;
+  const firstPostIndex = lastPostIndex - pageLimit;
+  const currentPosts = data?.slice(firstPostIndex, lastPostIndex);
+  const takeCount = pageLimit * currentPage;
 
   const fetchData = async () => {
-    const resp = await api.apiPostsGet();
+    const resp = await api.apiPostsGet(takeCount);
     if (resp.status !== 200) return;
-    setData(resp.data);
+    setData(resp.data.data ?? []);
+    setTotalCount(resp.data.total ?? 0);
   };
 
   const deleteItem = async (id: number) => {
@@ -33,7 +44,7 @@ const PostsPage: FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageLimit, currentPage]);
 
   return (
     <PublicLayout title="admin">
@@ -63,7 +74,7 @@ const PostsPage: FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {data!.map((k, i) => (
+                {currentPosts!.map((k, i) => (
                   <tr key={i}>
                     <td>{k.title}</td>
                     <td>{k.slug}</td>
@@ -79,6 +90,11 @@ const PostsPage: FC = () => {
                           router.push("/admin/categories/" + k.postId)
                         }
                       />
+                      <EyeIcon className="h-6 w-6 text-red-500 cursor-pointer"
+                      onClick={() =>
+                        router.push("/" + k.slug)
+                      }/>
+                      
                     </td>
                   </tr>
                 ))}
@@ -87,6 +103,13 @@ const PostsPage: FC = () => {
           </div>
         </>
       )}
+      <PaginationContainer
+        totalCount={totalCount}
+        currentPage={currentPage}
+        pageLimit={pageLimit}
+        setCurrentPage={setCurrentPage}
+        setPageLimit={setPageLimit}
+      />
     </PublicLayout>
   );
 };
