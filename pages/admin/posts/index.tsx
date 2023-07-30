@@ -19,19 +19,17 @@ import { PaginationContainer } from "../../../components/@elements/pagination/Pa
 const api = new PostsApi(apiConfig);
 
 const PostsPage: FC = () => {
+
+  const limits = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
   const router = useRouter();
   const [data, setData] = useState<Post[]>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  const lastPostIndex = currentPage * pageLimit;
-  const firstPostIndex = lastPostIndex - pageLimit;
-  const currentPosts = data?.slice(firstPostIndex, lastPostIndex);
-  const takeCount = pageLimit * currentPage;
-
   const fetchData = async () => {
-    const resp = await api.apiPostsGet(takeCount);
+    const resp = await api.apiPostsGet(pageLimit, (currentPage - 1) * pageLimit);
     if (resp.status !== 200) return;
     setData(resp.data.data ?? []);
     setTotalCount(resp.data.total ?? 0);
@@ -74,7 +72,7 @@ const PostsPage: FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentPosts!.map((k, i) => (
+                {data!.map((k, i) => (
                   <tr key={i}>
                     <td>{k.title}</td>
                     <td>{k.slug}</td>
@@ -91,10 +89,10 @@ const PostsPage: FC = () => {
                         }
                       />
                       <EyeIcon className="h-6 w-6 text-red-500 cursor-pointer"
-                      onClick={() =>
-                        router.push("/" + k.slug)
-                      }/>
-                      
+                        onClick={() =>
+                          router.push("/admin/posts/" + k.postId)
+                        } />
+
                     </td>
                   </tr>
                 ))}
@@ -107,6 +105,7 @@ const PostsPage: FC = () => {
         totalCount={totalCount}
         currentPage={currentPage}
         pageLimit={pageLimit}
+        limits={limits}
         setCurrentPage={setCurrentPage}
         setPageLimit={setPageLimit}
       />

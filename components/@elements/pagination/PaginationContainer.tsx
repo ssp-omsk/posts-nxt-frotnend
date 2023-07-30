@@ -5,11 +5,12 @@ type Props = {
   totalCount: number;
   currentPage: number;
   pageLimit: number;
+  limits: Array<number>;
   setCurrentPage: (page: number) => void
   setPageLimit: (page: number) => void
 }
 
-export const PaginationContainer = ({ totalCount, currentPage, pageLimit, setCurrentPage, setPageLimit }: Props) => {
+export const PaginationContainer = ({ totalCount, currentPage, pageLimit, limits, setCurrentPage, setPageLimit }: Props) => {
 
   const onChangeLimit = (value: string) => {
     if (parseInt(value) >= totalCount) {
@@ -39,7 +40,7 @@ export const PaginationContainer = ({ totalCount, currentPage, pageLimit, setCur
         firstPage={firstPage}
         lastPage={lastPage}
       />
-      <SelectLimit onChangeLimit={onChangeLimit} />
+      <SelectLimit onChangeLimit={onChangeLimit} limits={limits} />
     </div>
 
   )
