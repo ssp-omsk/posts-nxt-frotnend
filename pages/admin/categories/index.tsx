@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { PublicLayout } from "../../../components/layout/publicLayout";
 import { CategoriesApi, Category } from "../../../services/gen/restClient";
 import { apiConfig } from "../../../constants/apiConfig";
 import {
@@ -9,6 +8,7 @@ import {
   PlusIcon, ArrowLeftIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { AdminLayout } from "../../../components/layout/adminLayout";
 
 const api = new CategoriesApi(apiConfig);
 
@@ -32,18 +32,20 @@ const CategoriesPage: FC = () => {
   }, []);
 
   return (
-    <PublicLayout title="admin">
-      <div className="mr-auto">
-        <Link href="/admin" legacyBehavior>
-        <ArrowLeftIcon className="h-6 w-6 cursor-pointer text-blue-500 absolute" />
-        </Link>
+    <AdminLayout title="admin">
+      <div className="w-full flex">
+        <div className="mr-auto">
+          <Link href="/admin" legacyBehavior>
+            <ArrowLeftIcon className="h-6 w-6 cursor-pointer text-primary absolute" />
+          </Link>
+        </div>
+        <button
+          className="btn btn-primary btn-sm mb-3 ml-auto px-1"
+          onClick={() => router.push("/admin/posts/add")}
+        >
+          <PlusIcon className="h-6 w-6 cursor-pointer" />
+        </button>
       </div>
-      <button
-        className="btn btn-primary btn-sm mb-3 ml-auto px-1"
-        onClick={() => router.push("/admin/categories/add")}
-      >
-        <PlusIcon className="h-6 w-6 cursor-pointer" />
-      </button>
       {data?.length === 0 && <p>No data found</p>}
       {(data?.length ?? 0) > 0 && (
         <>
@@ -108,7 +110,7 @@ const CategoriesPage: FC = () => {
         </>
         
       )}
-    </PublicLayout>
+    </AdminLayout>
   );
 };
 

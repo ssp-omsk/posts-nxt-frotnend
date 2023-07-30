@@ -1,35 +1,34 @@
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { PublicLayout } from "../../../components/layout/publicLayout";
-import {
-  Post,
-  PostsApi,
-} from "../../../services/gen/restClient";
+import { Post, PostsApi } from "../../../services/gen/restClient";
 import { apiConfig } from "../../../constants/apiConfig";
 import {
   TrashIcon,
   PencilSquareIcon,
   PlusIcon,
   ArrowLeftIcon,
-  EyeIcon
+  EyeIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { PaginationContainer } from "../../../components/@elements/pagination/PaginationContainer";
+import { AdminLayout } from "../../../components/layout/adminLayout";
 
 const api = new PostsApi(apiConfig);
 
 const PostsPage: FC = () => {
-
-  const limits = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+  const limits = [5, 10, 20, 50];
 
   const router = useRouter();
   const [data, setData] = useState<Post[]>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageLimit, setPageLimit] = useState(1);
+  const [pageLimit, setPageLimit] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
 
   const fetchData = async () => {
-    const resp = await api.apiPostsGet(pageLimit, (currentPage - 1) * pageLimit);
+    const resp = await api.apiPostsGet(
+      pageLimit,
+      (currentPage - 1) * pageLimit
+    );
     if (resp.status !== 200) return;
     setData(resp.data.data ?? []);
     setTotalCount(resp.data.total ?? 0);
@@ -45,18 +44,20 @@ const PostsPage: FC = () => {
   }, [pageLimit, currentPage]);
 
   return (
-    <PublicLayout title="admin">
-      <div className="mr-auto">
-        <Link href="/admin" legacyBehavior>
-          <ArrowLeftIcon className="h-6 w-6 cursor-pointer text-blue-500 absolute" />
-        </Link>
+    <AdminLayout title="admin">
+      <div className="w-full flex">
+        <div className="mr-auto">
+          <Link href="/admin" legacyBehavior>
+            <ArrowLeftIcon className="h-6 w-6 cursor-pointer text-primary absolute" />
+          </Link>
+        </div>
+        <button
+          className="btn btn-primary btn-sm mb-3 ml-auto px-1"
+          onClick={() => router.push("/admin/posts/add")}
+        >
+          <PlusIcon className="h-6 w-6 cursor-pointer" />
+        </button>
       </div>
-      <button
-        className="btn btn-primary btn-sm mb-3 ml-auto px-1"
-        onClick={() => router.push("/admin/posts/add")}
-      >
-        <PlusIcon className="h-6 w-6 cursor-pointer" />
-      </button>
       {data?.length === 0 && <p>No data found</p>}
       {(data?.length ?? 0) > 0 && (
         <>
@@ -88,11 +89,10 @@ const PostsPage: FC = () => {
                           router.push("/admin/categories/" + k.postId)
                         }
                       />
-                      <EyeIcon className="h-6 w-6 text-red-500 cursor-pointer"
-                        onClick={() =>
-                          router.push("/admin/posts/" + k.postId)
-                        } />
-
+                      <EyeIcon
+                        className="h-6 w-6 text-green-500 cursor-pointer"
+                        onClick={() => router.push("/p/" + k.postId)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -109,7 +109,7 @@ const PostsPage: FC = () => {
         setCurrentPage={setCurrentPage}
         setPageLimit={setPageLimit}
       />
-    </PublicLayout>
+    </AdminLayout>
   );
 };
 

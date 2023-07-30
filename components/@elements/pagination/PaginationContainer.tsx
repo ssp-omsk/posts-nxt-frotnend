@@ -29,7 +29,7 @@ export const PaginationContainer = ({ totalCount, currentPage, pageLimit, limits
   const lastPage = (page: number) => setCurrentPage(page);
 
   return (
-    <div  className="flex flex-col items-center">
+    <div  className="flex flex-row-reverse items-center justify-between w-full">
       <Pagination
         totalCount={totalCount}
         pageLimit={pageLimit}

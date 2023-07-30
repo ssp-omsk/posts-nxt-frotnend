@@ -63,7 +63,7 @@ export const NavBar: React.FC<any> = ({ children }) => {
           </div>
           <UserNav />
         </div>
-        <div className="max-w-[1800px] min-w-full p-6 mx-auto">{children}</div>
+        <div className="max-w-[1800px] w-full p-6 mx-auto">{children}</div>
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>

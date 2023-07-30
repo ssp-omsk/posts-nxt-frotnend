@@ -147,6 +147,18 @@ export interface Post {
     'state'?: PostState;
     /**
      * 
+     * @type {number}
+     * @memberof Post
+     */
+    'views'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
+    'addedAt'?: string;
+    /**
+     * 
      * @type {Array<Category>}
      * @memberof Post
      */
@@ -157,55 +169,49 @@ export interface Post {
 /**
  * 
  * @export
- * @interface PostDto
+ * @interface PostListDto
  */
-export interface PostDto {
+export interface PostListDto {
     /**
      * 
      * @type {number}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'postId'?: number;
     /**
      * 
      * @type {string}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'title'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'image'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'slug'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'desctiption'?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof PostDto
-     */
-    'body'?: string | null;
-    /**
-     * 
      * @type {PostState}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'state'?: PostState;
     /**
      * 
      * @type {Array<CategoryDto>}
-     * @memberof PostDto
+     * @memberof PostListDto
      */
     'categories'?: Array<CategoryDto> | null;
 }
@@ -214,22 +220,21 @@ export interface PostDto {
 /**
  * 
  * @export
- * @interface PostDtoPagingResponse
+ * @interface PostListDtoPagingResponse
  */
-export interface PostDtoPagingResponse {
-    length: number;
+export interface PostListDtoPagingResponse {
     /**
      * 
      * @type {number}
-     * @memberof PostDtoPagingResponse
+     * @memberof PostListDtoPagingResponse
      */
     'total'?: number;
     /**
      * 
-     * @type {Array<PostDto>}
-     * @memberof PostDtoPagingResponse
+     * @type {Array<PostListDto>}
+     * @memberof PostListDtoPagingResponse
      */
-    'data'?: Array<PostDto> | null;
+    'data'?: Array<PostListDto> | null;
 }
 /**
  * 
@@ -1097,7 +1102,7 @@ export const PostsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostDtoPagingResponse>> {
+        async apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostListDtoPagingResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsGet(take, skip, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1159,7 +1164,7 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPostsGet(take?: number, skip?: number, options?: any): AxiosPromise<PostDtoPagingResponse> {
+        apiPostsGet(take?: number, skip?: number, options?: any): AxiosPromise<PostListDtoPagingResponse> {
             return localVarFp.apiPostsGet(take, skip, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1216,7 +1221,7 @@ export interface PostsApiInterface {
      * @throws {RequiredError}
      * @memberof PostsApiInterface
      */
-    apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): AxiosPromise<PostDtoPagingResponse>;
+    apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): AxiosPromise<PostListDtoPagingResponse>;
 
     /**
      * 
