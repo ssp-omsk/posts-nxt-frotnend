@@ -106,6 +106,7 @@ const CategoriesPage: FC = () => {
             </table>
           </div>
         </>
+        
       )}
     </PublicLayout>
   );

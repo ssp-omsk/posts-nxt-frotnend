@@ -217,6 +217,7 @@ export interface PostDto {
  * @interface PostDtoPagingResponse
  */
 export interface PostDtoPagingResponse {
+    length: number;
     /**
      * 
      * @type {number}
