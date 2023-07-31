@@ -973,43 +973,6 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPostsIdGet: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('apiPostsIdGet', 'id', id)
-            const localVarPath = `/api/Posts/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {number} id 
          * @param {Post} [post] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1085,6 +1048,43 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPostsSlugGet: async (slug: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('apiPostsSlugGet', 'slug', slug)
+            const localVarPath = `/api/Posts/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1119,16 +1119,6 @@ export const PostsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiPostsIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsIdGet(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {number} id 
          * @param {Post} [post] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1145,6 +1135,16 @@ export const PostsApiFp = function(configuration?: Configuration) {
          */
         async apiPostsPost(post?: Post, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsPost(post, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiPostsSlugGet(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsSlugGet(slug, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1179,15 +1179,6 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiPostsIdGet(id: number, options?: any): AxiosPromise<Post> {
-            return localVarFp.apiPostsIdGet(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {number} id 
          * @param {Post} [post] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1203,6 +1194,15 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
          */
         apiPostsPost(post?: Post, options?: any): AxiosPromise<Post> {
             return localVarFp.apiPostsPost(post, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiPostsSlugGet(slug: string, options?: any): AxiosPromise<Post> {
+            return localVarFp.apiPostsSlugGet(slug, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1235,15 +1235,6 @@ export interface PostsApiInterface {
     /**
      * 
      * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PostsApiInterface
-     */
-    apiPostsIdGet(id: number, options?: AxiosRequestConfig): AxiosPromise<Post>;
-
-    /**
-     * 
-     * @param {number} id 
      * @param {Post} [post] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1259,6 +1250,15 @@ export interface PostsApiInterface {
      * @memberof PostsApiInterface
      */
     apiPostsPost(post?: Post, options?: AxiosRequestConfig): AxiosPromise<Post>;
+
+    /**
+     * 
+     * @param {string} slug 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApiInterface
+     */
+    apiPostsSlugGet(slug: string, options?: AxiosRequestConfig): AxiosPromise<Post>;
 
 }
 
@@ -1295,17 +1295,6 @@ export class PostsApi extends BaseAPI implements PostsApiInterface {
     /**
      * 
      * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PostsApi
-     */
-    public apiPostsIdGet(id: number, options?: AxiosRequestConfig) {
-        return PostsApiFp(this.configuration).apiPostsIdGet(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {number} id 
      * @param {Post} [post] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1324,6 +1313,17 @@ export class PostsApi extends BaseAPI implements PostsApiInterface {
      */
     public apiPostsPost(post?: Post, options?: AxiosRequestConfig) {
         return PostsApiFp(this.configuration).apiPostsPost(post, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} slug 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public apiPostsSlugGet(slug: string, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).apiPostsSlugGet(slug, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

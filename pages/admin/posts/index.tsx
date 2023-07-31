@@ -91,7 +91,7 @@ const PostsPage: FC = () => {
                       />
                       <EyeIcon
                         className="h-6 w-6 text-green-500 cursor-pointer"
-                        onClick={() => router.push("/p/" + k.postId)}
+                        onClick={() => router.push("/p/" + k.slug)}
                       />
                     </td>
                   </tr>
