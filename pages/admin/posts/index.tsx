@@ -8,6 +8,7 @@ import {
   PlusIcon,
   ArrowLeftIcon,
   EyeIcon,
+  PencilIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { PaginationContainer } from "../../../components/@elements/pagination/PaginationContainer";
@@ -75,8 +76,8 @@ const PostsPage: FC = () => {
               <tbody>
                 {data!.map((k, i) => (
                   <tr key={i}>
-                    <td>{k.title}</td>
-                    <td>{k.slug}</td>
+                    <td> <p className="w-48 truncate">{k.title}</p> </td>
+                    <td> <p className="w-48 truncate">{k.slug}</p> </td>
                     <td>{k.categories?.map((q) => q.title).join(",")}</td>
                     <td className="flex cent">
                       <TrashIcon
@@ -92,6 +93,10 @@ const PostsPage: FC = () => {
                       <EyeIcon
                         className="h-6 w-6 text-green-500 cursor-pointer"
                         onClick={() => router.push("/p/" + k.slug)}
+                      />
+                      <PencilIcon
+                      className="h-6 w-6 text-grey-500 cursor-pointer" 
+                      onClick={() => router.push("/editingPost/" +  k.slug)}
                       />
                     </td>
                   </tr>

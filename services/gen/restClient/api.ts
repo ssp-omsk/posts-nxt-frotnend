@@ -132,7 +132,7 @@ export interface Post {
      * @type {string}
      * @memberof Post
      */
-    'desctiption'?: string | null;
+    'description'?: string | null;
     /**
      * 
      * @type {string}

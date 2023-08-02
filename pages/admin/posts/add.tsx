@@ -128,9 +128,9 @@ const PostAdd: FC = () => {
                 </label>
                 <textarea
                   className="textarea textarea-bordered h-24"
-                  value={model.desctiption ?? ""}
+                  value={model.description ?? ""}
                   onChange={(val) =>
-                    setModel({ ...model, desctiption: val.target.value })
+                    setModel({ ...model, description: val.target.value })
                   }
                 ></textarea>
               </div>
