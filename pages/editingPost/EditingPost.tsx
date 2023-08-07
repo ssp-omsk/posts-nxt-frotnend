@@ -56,8 +56,8 @@ export const EditingPost = (props: Props) => {
                 </label>
                 <textarea
                   className="textarea textarea-bordered h-24"
-                  value={data.description ?? ''}
-                  onChange={(e) => { setData({ ...data, description: e.currentTarget.value }) }}
+                  value={data.desctiption ?? ''}
+                  onChange={(e) => { setData({ ...data, desctiption: e.currentTarget.value }) }}
                 ></textarea>
               </div>
             </div>

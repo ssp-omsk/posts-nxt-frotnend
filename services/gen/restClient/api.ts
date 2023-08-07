@@ -132,7 +132,7 @@ export interface Post {
      * @type {string}
      * @memberof Post
      */
-    'description'?: string | null;
+    'desctiption'?: string | null;
     /**
      * 
      * @type {string}
@@ -894,10 +894,11 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @param {number} [take] 
          * @param {number} [skip] 
+         * @param {string} [categorySlug] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPostsGet: async (take?: number, skip?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiPostsGet: async (take?: number, skip?: number, categorySlug?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -920,6 +921,10 @@ export const PostsApiAxiosParamCreator = function (configuration?: Configuration
 
             if (skip !== undefined) {
                 localVarQueryParameter['Skip'] = skip;
+            }
+
+            if (categorySlug !== undefined) {
+                localVarQueryParameter['CategorySlug'] = categorySlug;
             }
 
 
@@ -1099,11 +1104,12 @@ export const PostsApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} [take] 
          * @param {number} [skip] 
+         * @param {string} [categorySlug] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostListDtoPagingResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsGet(take, skip, options);
+        async apiPostsGet(take?: number, skip?: number, categorySlug?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostListDtoPagingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiPostsGet(take, skip, categorySlug, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1161,11 +1167,12 @@ export const PostsApiFactory = function (configuration?: Configuration, basePath
          * 
          * @param {number} [take] 
          * @param {number} [skip] 
+         * @param {string} [categorySlug] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiPostsGet(take?: number, skip?: number, options?: any): AxiosPromise<PostListDtoPagingResponse> {
-            return localVarFp.apiPostsGet(take, skip, options).then((request) => request(axios, basePath));
+        apiPostsGet(take?: number, skip?: number, categorySlug?: string, options?: any): AxiosPromise<PostListDtoPagingResponse> {
+            return localVarFp.apiPostsGet(take, skip, categorySlug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1217,11 +1224,12 @@ export interface PostsApiInterface {
      * 
      * @param {number} [take] 
      * @param {number} [skip] 
+     * @param {string} [categorySlug] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostsApiInterface
      */
-    apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig): AxiosPromise<PostListDtoPagingResponse>;
+    apiPostsGet(take?: number, skip?: number, categorySlug?: string, options?: AxiosRequestConfig): AxiosPromise<PostListDtoPagingResponse>;
 
     /**
      * 
@@ -1273,12 +1281,13 @@ export class PostsApi extends BaseAPI implements PostsApiInterface {
      * 
      * @param {number} [take] 
      * @param {number} [skip] 
+     * @param {string} [categorySlug] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PostsApi
      */
-    public apiPostsGet(take?: number, skip?: number, options?: AxiosRequestConfig) {
-        return PostsApiFp(this.configuration).apiPostsGet(take, skip, options).then((request) => request(this.axios, this.basePath));
+    public apiPostsGet(take?: number, skip?: number, categorySlug?: string, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).apiPostsGet(take, skip, categorySlug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

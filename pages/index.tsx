@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Card } from "../components/@elements/card";
 import { PublicLayout } from "../components/layout/publicLayout";
 import { AuthContext } from "./_app";
+import { SideBar } from "../components/@elements/SideBar";
 
 export default function Home() {
   const context = useContext(AuthContext)
@@ -50,6 +51,7 @@ export default function Home() {
               <button className="btn btn-primary">Buy Now</button>
             </div>
           </Card>
+          <SideBar/>
         </div>
       </div>
     </PublicLayout>
